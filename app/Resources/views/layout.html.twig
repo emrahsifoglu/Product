@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+      <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/layout.css') }}' />
+{% endblock %}
+
+{% block js %}
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
+        <script type="text/javascript" src="http://backbonejs.org/backbone-min.js"></script>
+{% endblock %}
+
+{% block body %}
+    <header>{% block header %}{% endblock %}</header>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer class="site-footer">
+        Footer
+    </footer>
+{% endblock %}

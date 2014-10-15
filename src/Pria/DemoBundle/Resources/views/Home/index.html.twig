@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Welcome, this is Home {% endblock %}
+
+{% block header %} Home {% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/login-form.css') }}' />
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/product-list.css') }}' />
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/priademo/js/product-list.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/priademo/js/login-form.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {{ include('PriaDemoBundle:Home:_product-list.html.twig') }}
+    {{ include('PriaDemoBundle:Home:_login-form.html.twig') }}
+{% endblock %}
+

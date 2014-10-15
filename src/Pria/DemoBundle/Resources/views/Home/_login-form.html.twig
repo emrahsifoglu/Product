@@ -1,0 +1,17 @@
+<div id="login-container-open" class="login-container-toggle"><span><a href="#">Login</a></span></div>
+<div id="login-container">
+    <div style="right: 10px;" id="login-container-hide" class="login-container-toggle"><span><a href="#">Hide</a></span></div>
+    <form id="login-form" action="{{ path('login_check') }}" method="post">
+        {# <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />   #}
+        <div>
+            <label for="username">Username</label>
+            <input name="_username" id="_username" type="text" placeholder="USERNAME" data-required="true" data-error-valid="Username is not valid" data-min="4" data-max="15" data-error-len="Username must be between 4 and 15 characters" data-error-required="Username is required"/>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input name="_password" id="_password" type="Password" placeholder="PASSWORD" data-required="true" data-min="4" data-max="16" data-error-len="Password must be between 4 and 16 characters" data-error-required="Password is required"/>
+        </div>
+        <input name="login" type="button" id="_submit" value="Log In" />
+    </form>
+</div>
+<input type="hidden" id="login-success" value="{{ path('login_success') }}" />

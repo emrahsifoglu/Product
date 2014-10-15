@@ -1,0 +1,40 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 62.5%;
+    font-family: Helvetica, sans-serif;
+    background: url(../images/stripe.png) repeat;
+}
+
+p {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+html { height:100%; }
+
+body { min-height:100%; padding:0; margin:0; position:relative; }
+
+body:after { content:''; display:block; height:100px; }
+
+header {
+    background:#d5cadb;
+    height:30px;
+    padding-left: 5px;
+    vertical-align: middle;
+    line-height: 30px;
+}
+
+footer {
+    background: #d5cadb;
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+}

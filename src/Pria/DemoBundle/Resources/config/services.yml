@@ -1,0 +1,12 @@
+parameters:
+    authentication_handler.class: 'Pria\DemoBundle\Component\Authentication\AuthenticationHandler'
+    logout_success_handler.class: 'Pria\DemoBundle\Component\Authentication\LogoutSuccessHandler'
+
+services:
+    pria.authentication_handler:
+        class: %authentication_handler.class%
+        public: false
+    pria.logout_success_handler:
+        class:  %logout_success_handler.class%
+        tags:
+          - { name: 'monolog.logger', channel: 'security' }

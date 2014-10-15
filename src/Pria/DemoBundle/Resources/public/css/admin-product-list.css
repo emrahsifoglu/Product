@@ -1,0 +1,34 @@
+#edit {
+    color: green;
+}
+
+#show {
+    color: green;
+}
+
+#delete {
+    color: darkred;
+}
+
+#product-edit {
+    overflow: hidden;
+    position: absolute;
+    background-color: #eee;
+    margin: 10px;
+    padding-left: 5px;
+    top: 65px;
+    left: 570px;
+    width: 425px;
+    height: 300px;
+}
+
+#product-edit #new {
+    position:absolute; top:5px; right: 10px;
+}
+
+#product-edit #new span {
+    cursor:pointer;
+    color:blue;
+    text-decoration:underline;
+    font-weight: bold;
+}

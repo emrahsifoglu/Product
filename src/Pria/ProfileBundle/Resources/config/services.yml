@@ -1,0 +1,7 @@
+parameters:
+    profile_manager.class: 'Pria\ProfileBundle\Services\ProfileManager'
+
+services:
+    pria.profile_manager:
+        class:  %profile_manager.class%
+        arguments:  ['@doctrine.orm.entity_manager']

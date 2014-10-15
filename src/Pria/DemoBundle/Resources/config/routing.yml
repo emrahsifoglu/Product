@@ -1,0 +1,33 @@
+index:
+  pattern: /
+  defaults: { _controller: PriaDemoBundle:Demo:index }
+
+home:
+   pattern: /home
+   defaults: { _controller: PriaDemoBundle:Demo:home }
+
+login:
+   pattern: /login
+   defaults: { _controller: PriaDemoBundle:Demo:login }
+
+login_check:
+   pattern: /oauth/login_check
+
+login_success:
+   pattern: /oauth/
+   defaults: { _controller: PriaDemoBundle:Demo:secured }
+
+secured_area:
+   pattern: /oauth/
+   defaults: { _controller: PriaDemoBundle:Demo:secured }
+
+user_area:
+   pattern: /oauth/user/
+   defaults: { _controller: PriaDemoBundle:Demo:user }
+
+admin_area:
+   pattern: /oauth/admin/
+   defaults: { _controller: PriaDemoBundle:Demo:admin }
+
+logout:
+   pattern: /oauth/logout

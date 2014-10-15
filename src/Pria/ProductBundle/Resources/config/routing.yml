@@ -1,0 +1,35 @@
+_api_create:
+    pattern: /api/v1/product/
+    defaults: { _controller: PriaProductBundle:CRUD:create, _format: json }
+    requirements:
+        _method: POST
+
+_api_read:
+    pattern: /api/v1/product/{id}
+    defaults: {_controller: PriaProductBundle:CRUD:read, _format: json }
+    requirements:
+        _method: GET
+
+_api_readAll:
+    pattern: /api/v1/product/
+    defaults: {_controller: PriaProductBundle:CRUD:readAll, _format: json }
+    requirements:
+        _method: GET
+
+#_api_patch:
+#    pattern: /api/v1/product/{id}
+#    defaults: { _controller: PriaProductBundle:CRUD:patch, _format: json }
+#    requirements:
+#        _method: PATCH
+
+_api_update:
+    pattern: /api/v1/product/{id}
+    defaults: { _controller: PriaProductBundle:CRUD:update, _format: json }
+    requirements:
+        _method: PUT
+
+_api_delete:
+    pattern: /api/v1/product/{id}
+    defaults: { _controller: PriaProductBundle:CRUD:delete, _format: json }
+    requirements:
+        _method: DELETE

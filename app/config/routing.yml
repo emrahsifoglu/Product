@@ -1,0 +1,11 @@
+pria_product:
+    resource: "@PriaProductBundle/Resources/config/routing.yml"
+    prefix:   /
+
+pria_demo:
+    resource: "@PriaDemoBundle/Resources/config/routing.yml"
+    prefix:   /
+
+pria_profile:
+     resource: "@PriaProfileBundle/Resources/config/routing.yml"
+     prefix:   /

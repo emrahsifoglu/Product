@@ -1,0 +1,25 @@
+<table style="border: 0">
+    <tr>
+        <td>
+            <div id="product-list-container">
+                <ul id="product-list">
+
+                </ul>
+            </div>
+        </td>
+        <td id="product-detail-holder">
+
+        </td>
+   </tr>
+</table>
+
+<script id="productItem" type="text/template">
+    <li class="show"><img src='/uploads/uploads/products/<%= imageThumb %>'/><h3><%= name %></h3><p><%= description %></p></li>
+</script>
+
+<script id="productItemDetail" type="text/template">
+    <div id="product-detail" style="background-image: url('/uploads/uploads/products/<%= imageBig %>')">
+        <h3 style="padding-left: 5px;"><%= name %></h3>
+        <p style="padding-left: 5px;" id="text"><%= description %></p>
+    </div>
+</script>

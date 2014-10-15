@@ -1,0 +1,22 @@
+{% extends ':Security:layout.html.twig' %}
+
+{% block title %} ADMIN AREA {% endblock %}
+
+{% block header %} Welcome, {{ app.user.username }} this is Admin Area {% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/product-list.css') }}' />
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/admin-product-list.css') }}' />
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/priademo/js/admin-product-list.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    {{ include('PriaDemoBundle:Admin:_admin-product-list.html.twig') }}
+{% endblock %}
+

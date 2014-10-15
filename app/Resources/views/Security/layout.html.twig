@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Welcome, this is secured Area {% endblock %}
+
+{% block header %} Secured Area {% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/logout-form.css') }}' />
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/priademo/js/logout-form.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {{ include('PriaDemoBundle:Secured:_logout-form.html.twig') }}
+{% endblock %}

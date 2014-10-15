@@ -1,0 +1,46 @@
+#product-list-container {
+    margin: 20px;
+}
+
+#product-list-container #product-list {
+    list-style-type: none;
+    width: 500px;
+}
+
+#product-list-container #product-list h3 {
+    font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+#product-list-container #product-list li img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+#product-list-container #product-list li p {
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+#product-list-container #product-list li {
+    padding: 10px;
+    overflow: auto;
+    background: #eee;
+}
+
+#product-list-container #product-list li:hover {
+    background: #eed700;
+    cursor: pointer;
+}
+
+#product-detail {
+    overflow: hidden;
+    position: absolute;
+    background-color: #eee;
+    margin: 10px;
+    top: 65px;
+    left: 570px;
+    width: 720px;
+    height: 500px;
+}

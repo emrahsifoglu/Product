@@ -1,0 +1,7 @@
+parameters:
+    product_manager.class: 'Pria\ProductBundle\Services\ProductManager'
+
+services:
+    pria.product_manager:
+        class:  %product_manager.class%
+        arguments:  ['@doctrine.orm.entity_manager']
