@@ -23,7 +23,7 @@ class CRUDController extends Controller {
         $imageBig = $params['imageBig'];
         $externalLink = $params['externalLink'];
         $return = $this->getProductManager()->createProduct($name, $description, $imageThumb, $imageBig, $externalLink);
-        return new JsonResponse(array('return' => $return));
+        return new JsonResponse(array('id' => $return));
     }
 
     public function readAction($id)
@@ -36,13 +36,6 @@ class CRUDController extends Controller {
         $products = $this->getProductManager()->loadProductByAll();
         return new JsonResponse(array('products' => $products));
     }
-
-    /*
-    public function patchAction($id)
-    {
-
-    }
-    */
 
     public function updateAction(Request $request)
     {

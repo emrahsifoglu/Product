@@ -33,23 +33,23 @@
     <div id="product-edit">
         <div id="new"><span>New<span></div>
         <h3>Name</h3>
-        <input type="text" id="name" value="<%= name %>" placeholder="Name">
+        <input type="text" id="name" value="<%= name %>" placeholder="Name(min:8, max:16)">
         <h3>Description</h3>
-        <textarea id="description" style="resize: none;" rows="4" cols="50" placeholder="Description"><%= description %></textarea>
+        <textarea id="description" style="resize: none;" rows="4" cols="50" placeholder="Description(min:5, max:100)"><%= description %></textarea>
         <h3>External Link</h3>
-        <input id="externalLink" type="text" value="<%= externalLink %>"  placeholder="Link">
+        <input id="externalLink" type="text" value="<%= externalLink %>"  placeholder="www.yourlink.com">
         <div style="position:absolute; bottom: 5px; right: 5px;"><button id="update">Update</button></div>
     </div>
 </script>
 
-<script id="productItemForNew" type="text/template">
+<script id="productItemNew" type="text/template">
     <div id="product-edit">
         <h3>Name</h3>
-        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="name" placeholder="Name(min:8, max:16)">
         <h3>Description</h3>
-        <textarea id="description" style="resize: none;" rows="4" cols="50" placeholder="Description"></textarea>
+        <textarea id="description" style="resize: none;" rows="4" cols="50" placeholder="Description(min:5, max:100)"></textarea>
         <h3>External Link</h3>
-        <input id="externalLink" type="text" placeholder="Link">
-        <div style="position:absolute; bottom: 5px; right: 5px;"><button id="save">save</button></div>
+        <input id="externalLink" type="text" placeholder="www.yourlink.com">
+        <div style="position:absolute; bottom: 5px; right: 5px;"><button id="save">Save</button></div>
     </div>
 </script>
