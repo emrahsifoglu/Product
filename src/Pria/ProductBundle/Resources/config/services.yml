@@ -1,7 +1,10 @@
 parameters:
     product_manager.class: 'Pria\ProductBundle\Services\ProductManager'
+    product_manager.params:
+        directoryImageBig: 'uploads/uploads/products/'
+        directoryImageThumb: 'uploads/uploads/products/'
 
 services:
     pria.product_manager:
         class:  %product_manager.class%
-        arguments:  ['@doctrine.orm.entity_manager']
+        arguments:  ['@doctrine.orm.entity_manager', '%product_manager.params%']

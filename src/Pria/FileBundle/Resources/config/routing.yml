@@ -1,0 +1,3 @@
+upload_file:
+    path:     /upload_file
+    defaults: { _controller: PriaFileBundle:File:upload }

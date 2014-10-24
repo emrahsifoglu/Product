@@ -1,0 +1,7 @@
+parameters:
+#    pria_file.example.class: Pria\FileBundle\Example
+
+services:
+#    pria_file.example:
+#        class: %pria_file.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

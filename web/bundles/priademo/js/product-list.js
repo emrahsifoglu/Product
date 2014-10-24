@@ -20,6 +20,9 @@ $(document).ready(function(){
     });
 
     var ProductView = Backbone.View.extend({
+        events:{
+            "click .show" : "showProduct"
+        },
         initialize: function() {
             this.template = _.template( $('#productItem').html() );
         },
@@ -27,19 +30,15 @@ $(document).ready(function(){
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
-        events:{
-            "click .show":"showProduct"
-        },
         showProduct:function () {
             var productDetailView = new ProductDetailView({ model: this.model });
             $('#product-detail-holder').html(productDetailView.render().el);
-            return false;
         }
     });
 
     var ProductDetailView = Backbone.View.extend({
         initialize: function(){
-            this.render();
+            //this.render(); ? Do we have to use it?
         },
         render: function(){
             var template = _.template( $("#productItemDetail").html(), {} );

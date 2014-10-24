@@ -11,27 +11,18 @@ class ProductManager {
      */
     protected $em;
 
-    public function __construct(EntityManager $em){
+    /**
+     *@var string $imagesDirectory
+     */
+    protected $params;
+
+    /**
+     * @param EntityManager $em
+     * @param array $params
+     */
+    public function __construct(EntityManager $em, $params){
         $this->em = $em;
-    }
-
-    /**
-     * @param int $id
-     * @return Product
-     */
-    public function loadProductById($id){
-        return $this->em->getRepository('PriaProductBundle:Product')->loadProductById($id);
-    }
-
-    /**
-     * @return Array
-     */
-    public function loadProductByAll(){
-        return $this->em->getRepository('PriaProductBundle:Product')->loadProductByAll();
-    }
-
-    public function updateProductById($id, $name, $description, $imageThumb, $imageBig, $externalLink){
-        return $this->em->getRepository('PriaProductBundle:Product')->updateProductById($id, $name, $description, $imageThumb, $imageBig, $externalLink);
+        $this->params = $params;
     }
 
     public function createProduct($name, $description, $imageThumb, $imageBig, $externalLink){
@@ -46,10 +37,47 @@ class ProductManager {
         return $product->getId();
     }
 
+    /**
+     * @param int $id
+     * @return Product
+     */
+    public function fetchProductById($id){
+        return $this->em->getRepository('PriaProductBundle:Product')->loadProductById($id);
+    }
+
+    /**
+     * @return Array
+     */
+    public function fetchProducts(){
+        return $this->em->getRepository('PriaProductBundle:Product')->loadProductByAll();
+    }
+
+    public function updateProductById($id, $name, $description, $imageThumb, $imageBig, $externalLink){
+        $product = $this->fetchProductById($id);
+        $currentImageThumb = $product->getImageThumb();
+        $currentImageBig = $product->getImageBig();
+        if ($currentImageThumb != $imageThumb) unlink($this->getParameter('directoryImageThumb').$currentImageThumb);
+        if ($currentImageBig != $imageBig) unlink($this->getParameter('directoryImageBig').$currentImageBig);
+        return $this->em->getRepository('PriaProductBundle:Product')->updateProductById($id, $name, $description, $imageThumb, $imageBig, $externalLink);
+    }
+
     public function deleteProductById($id){
-        $product = $this->loadProductById($id);
+        $product = $this->fetchProductById($id);
+        $imageThumb = $product->getImageThumb();
+        $imageBig = $product->getImageBig();
         $this->em->remove($product);
         $this->em->flush();
-        return 1;
+        unlink($this->getParameter('directoryImageBig').$imageBig);
+        unlink($this->getParameter('directoryImageThumb').$imageThumb);
+        return true;
+    }
+
+    private function getParameter($parameterKey)
+    {
+        if (array_key_exists($parameterKey, $this->params)) {
+            return $this->params[$parameterKey];
+        }
+
+        return null;
     }
 } 

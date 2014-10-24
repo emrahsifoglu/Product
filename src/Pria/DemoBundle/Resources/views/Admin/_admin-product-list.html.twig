@@ -15,7 +15,9 @@
 
 <script id="productItem" type="text/template">
     <li>
-       <img src='/uploads/uploads/products/<%= imageThumb %>'/><h3><%= name %></h3><p><%= description %></p>
+       <img src='/uploads/uploads/products/<%= imageThumb %>'/>
+       <h3><%= name %></h3>
+       <p><%= description %></p>
        <span style="float: right; font-weight: bold;">
            <a id="edit" href="#">EDIT</a> - <a id="show" href="#">SHOW</a> - <a id="delete" href="#">DELETE</a>
         </span>
@@ -23,7 +25,7 @@
 </script>
 
 <script id="productItemDetail" type="text/template">
-    <div id="product-detail" style="background-image: url('/uploads/uploads/products/<%= imageThumb %>')">
+    <div style="background-image: url('/uploads/uploads/products/<%= imageBig %>')" id="product-detail">
         <h3 style="padding-left: 5px;"><%= name %></h3>
         <p style="padding-left: 5px;" id="text"><%= description %></p>
     </div>
@@ -31,6 +33,14 @@
 
 <script id="productItemEdit" type="text/template">
     <div id="product-edit">
+        <div style="position:absolute; top: 5px; right: 5px;">
+            <form id="frmEdit" enctype="multipart/form-data" method="post" action="{{ path('upload_file') }}">
+                <div id="browse"><%= imageThumb %></div>
+                <div style="height: 0px;width: 0px; overflow:hidden;">
+                    <input id="image_file" name="image_file" type="file" data-required="true" data-error-valid="File is not valid"/>
+                </div>
+            </form>
+        </div>
         <div id="new"><span>New<span></div>
         <h3>Name</h3>
         <input type="text" id="name" value="<%= name %>" placeholder="Name(min:8, max:16)">
@@ -44,6 +54,14 @@
 
 <script id="productItemNew" type="text/template">
     <div id="product-edit">
+        <div style="position:absolute; top: 5px; right: 5px;">
+            <form id="frmNew" enctype="multipart/form-data" method="post" action="{{ path('upload_file') }}">
+                <div id="browse">Select</div>
+                <div style="height: 0px;width: 0px; overflow:hidden;">
+                    <input id="image_file" name="image_file" type="file" data-required="true" data-error-valid="File is not valid"/>
+                </div>
+            </form>
+        </div>
         <h3>Name</h3>
         <input type="text" id="name" placeholder="Name(min:8, max:16)">
         <h3>Description</h3>

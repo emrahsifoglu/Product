@@ -1,3 +1,7 @@
+pria_file:
+    resource: "@PriaFileBundle/Resources/config/routing.yml"
+    prefix:   /
+
 pria_product:
     resource: "@PriaProductBundle/Resources/config/routing.yml"
     prefix:   /

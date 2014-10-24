@@ -4,15 +4,15 @@ _api_create:
     requirements:
         _method: POST
 
-_api_read:
+_api_fetch:
     pattern: /api/v1/product/{id}
-    defaults: {_controller: PriaProductBundle:CRUD:read, _format: json }
+    defaults: {_controller: PriaProductBundle:CRUD:fetch, _format: json }
     requirements:
         _method: GET
 
-_api_readAll:
+_api_fetchAll:
     pattern: /api/v1/product/
-    defaults: {_controller: PriaProductBundle:CRUD:readAll, _format: json }
+    defaults: {_controller: PriaProductBundle:CRUD:fetchAll, _format: json }
     requirements:
         _method: GET
 

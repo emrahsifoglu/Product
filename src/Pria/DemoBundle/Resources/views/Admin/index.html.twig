@@ -8,10 +8,14 @@
     {{ parent() }}
     <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/product-list.css') }}' />
     <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priademo/css/admin-product-list.css') }}' />
+    <link rel='stylesheet' type='text/css' media='all' href='{{ asset('bundles/priafile/css/file-browser-btn.css') }}' />
 {% endblock %}
 
 {% block js %}
     {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/priafile/js/jquery.form.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/priafile/js/file-validator.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/priafile/js/file-browser-btn.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/priademo/js/admin-product-list.js') }}"></script>
 {% endblock %}
 

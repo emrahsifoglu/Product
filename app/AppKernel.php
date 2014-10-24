@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Pria\DemoBundle\PriaDemoBundle(),
             new Pria\ProfileBundle\PriaProfileBundle(),
-            new Pria\ProductBundle\PriaProductBundle()
+            new Pria\ProductBundle\PriaProductBundle(),
+            new Pria\FileBundle\PriaFileBundle()
         ];
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

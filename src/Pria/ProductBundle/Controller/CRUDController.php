@@ -26,14 +26,15 @@ class CRUDController extends Controller {
         return new JsonResponse(array('id' => $return));
     }
 
-    public function readAction($id)
+    public function fetchAction($id)
     {
-        return new JsonResponse(array('success'=>'fetchById : '.$id));
+        $product = $this->getProductManager()->fetchProductById($id);
+        return new JsonResponse(array('product' => $product));
     }
 
-    public function readAllAction()
+    public function fetchAllAction()
     {
-        $products = $this->getProductManager()->loadProductByAll();
+        $products = $this->getProductManager()->fetchProducts();
         return new JsonResponse(array('products' => $products));
     }
 

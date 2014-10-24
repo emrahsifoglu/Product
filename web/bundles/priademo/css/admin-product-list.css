@@ -23,7 +23,7 @@
 }
 
 #product-edit #new {
-    position:absolute; top:5px; right: 10px;
+    position:absolute; bottom:5px; left: 5px;
 }
 
 #product-edit #new span {

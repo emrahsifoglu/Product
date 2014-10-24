@@ -1,11 +1,7 @@
 $(document).ready(function(){
     "use strict";
 
-    var patterns = {
-        name        : /^[a-z0-9_-]{8,16}$/,
-        description : /^[a-z0-9_-]{5,100}$/,
-        url         : /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-    };
+    var vent = _.extend({}, Backbone.Events);
 
     var Product = Backbone.Model.extend({
         urlRoot: '../../api/v1/product/',
@@ -34,39 +30,48 @@ $(document).ready(function(){
                 console.log('Product:on:error');
             });
         },
-        validate: function (attrs) {
+        validate: function (attrs) { //https://github.com/thedersen/backbone.validation
             var errors = [];
+            var patterns = {
+                name        : /^[a-zA-Z0-9_-]{5,15}$/,
+                url         : /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+            };
+
             if (!patterns.name.test(attrs.name)) {
                 errors.push({name: 'name', message: 'Please fill name field.'});
             }
-            if (!patterns.description.test(attrs.description)) {
+            if (attrs.description.length < 5 || attrs.description.length > 100) {
                 errors.push({name: 'name', message: 'Please fill description field.'});
             }
             if (!patterns.url.test(attrs.externalLink)) {
                 errors.push({name: 'name', message: 'Please fill external link field.'});
+            }
+            if (!attrs.imageThumb) { // looking for a proper expressions
+                errors.push({name: 'imageThumb', message: 'Please select an image field.'});
             }
             return errors.length > 0 ? errors : false;
         }
     });
 
     var ProductView = Backbone.View.extend({
-        initialize: function() {
-            this.model.on('change', this.update, this);
-            this.template = _.template( $('#productItem').html() );
+        events:{
+            "click #show"   :   "showProduct",
+            "click #edit"   :   "editProduct",
+            "click #delete" :   "deleteProduct"
         },
-        update : function(){
-            console.log('ProductView:update');
-            this.$el.html(this.template(this.model.toJSON()));
+        initialize: function() {
+            _.bindAll(this, 'render', 'updateProduct', 'showProduct', 'editProduct', 'deleteProduct');
+            this.model.on('changed', this.updateProduct, this);
+            this.template = _.template( $('#productItem').html() );
         },
         render: function() {
             console.log('ProductView:render');
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         },
-        events:{
-            "click #show"   :   "showProduct",
-            "click #edit"   :   "editProduct",
-            "click #delete" :   "deleteProduct"
+        updateProduct : function(){
+            console.log('ProductView:update');
+            this.$el.html(this.template(this.model.toJSON()));
         },
         showProduct: function (e) {
             e.preventDefault();
@@ -80,13 +85,17 @@ $(document).ready(function(){
         },
         deleteProduct: function (e) {
             e.preventDefault();
-            products.removeOne(this);
+            if (confirm("Are you sure that you want to permanently delete this?")){
+                console.log('ProductView:deleteProduct');
+                $('#product-crud-holder').html( new ProductNewView().render().el);
+                products.removeOne(this);
+            }
         }
     });
 
     var ProductDetailView = Backbone.View.extend({
         initialize: function(){
-
+            _.bindAll(this, 'render');
         },
         render: function(){
             var template = _.template( $("#productItemDetail").html(), {} );
@@ -96,104 +105,167 @@ $(document).ready(function(){
     });
 
     var ProductEditView = Backbone.View.extend({
+        events:{
+            "click #update" : "updateProduct",
+            "click #new"    : "newProduct"
+        },
         initialize: function(){
-
+            _.bindAll(this, 'render', 'setupFileBrowser', 'newProduct', 'updateProduct');
         },
         render: function(){
             console.log("ProductEditView:Edit:" + this.model.toJSON().id);
             var template = _.template( $("#productItemEdit").html(), {} );
-            this.$el.html( template(this.model.toJSON()) );
+            this.$el.html( template(this.model.toJSON()));
+            this.setupFileBrowser();
             return this;
         },
-        events:{
-            "click #update" : "updateProduct",
-            "click #new"    : "newProductView"
+        setupFileBrowser: function(){
+            console.log('setupFileBrowser');
+            fileBrowser(this);
         },
-        newProductView: function(e){
+        newProduct: function(e){
             e.preventDefault();
             $('#product-crud-holder').html( new ProductNewView().render().el);
         },
         updateProduct: function(e){
             e.preventDefault();
+            var isFileSelected = false;
+            var product = this.model;
+            var frm  = this.$("#frmEdit");
+            var update = $("#update");
             var name = $('#name').val();
             var description = $('#description').val();
-            var imageThumb = this.model.get('imageThumb');
-            var imageBig = this.model.get('imageBig');
             var externalLink = $('#externalLink').val();
+            var imageThumb = $("#image_file").val();
+            var currentImageThumb = product.get('imageThumb');
             var obj = { name         : name,
-                description  : description,
-                imageThumb   : imageThumb,
-                imageBig     : imageBig,
-                externalLink : externalLink };
+                        description  : description,
+                        externalLink : externalLink };
 
-            var feedback = {
-                success: function () {
-                    console.log('ProductEditView:Product:Update:Succeed');
-                },
-                error: function (model, error) {
-                    console.log('ProductEditView:Product:Update:Failed');
-                    console.log(error);
-                },
-                wait: true
-            };
+            if (imageThumb != "") {
+                isFileSelected = true;
+                obj.imageThumb = imageThumb;
+            } else {
+                obj.imageThumb = currentImageThumb;
+            }
 
-            var valid = this.model.save(obj, feedback);
-            if(!valid) {
+            var valid = product.set(obj, { validate: true }, { silent:true });
+            if (!valid){
                 console.log('ProductEditView:Product:Update:IsValid');
             } else {
-                valid.complete(function() {
-                    console.log('ProductEditView:Product:Update:Valid');
-                });
+                if (isFileSelected){
+                    vent.on( "FileUpload", function(param){
+                        var status = param.status;
+                        switch(status){
+                            case 'beforeSend' : update.attr("disabled", "disabled"); break;
+                            case 'uploadProgress' : console.log(param.percentComplete); break;
+                            case 'success' :
+                                obj = { imageThumb : param.filename.imageThumb, imageBig : param.filename.imageBig };
+                                product.save(obj, {
+                                    success: function () {
+                                        console.log('ProductEditView:Product:Update:Succeed');
+                                        product.trigger('changed');
+                                    },
+                                    error: function (model, error) {
+                                        console.log('ProductEditView:Product:Update:Failed');
+                                        console.log(error);
+                                    },
+                                    wait: true
+                                }); // to force to save.
+                                break;
+                            case 'error' : break;
+                            case 'complete' :
+                                update.removeAttr("disabled");
+                                vent.off( "FileUpload");
+                                break;
+                        }
+                    });
+                    fileUpload(frm, vent);
+                    frm.submit();
+                } else {
+                    product.save(obj, {
+                        beforeSend : function(){
+                            update.attr("disabled", "disabled");
+                        },
+                        success: function () {
+                            console.log('ProductEditView:Product:Update:Succeed(Image is kept same)');
+                            product.trigger('changed');
+                        },
+                        error: function (model, error) {
+                            console.log('ProductEditView:Product:Update:Failed(Image is kept same)');
+                            console.log(error);
+                        },complete :function(){
+                            update.removeAttr("disabled");
+                        },
+                        wait: true
+                    });
+                }
             }
         }
     });
 
     var ProductNewView = Backbone.View.extend({
+        events:{
+            "click #save" : "createProduct"
+        },
         initialize: function(){
-
+            _.bindAll(this, 'render', 'setupFileBrowser', 'createProduct', 'setupFileBrowser');
         },
         render: function(){
             var template = _.template( $("#productItemNew").html(), {} );
             this.$el.html( template() );
+            this.setupFileBrowser();
             return this;
         },
-        events:{
-            "click #save"   :   "createProduct"
+        setupFileBrowser: function(){
+            console.log('setupFileBrowser');
+            fileBrowser(this);
         },
         createProduct: function(){
+            var frm  = this.$("#frmNew");
+            var save = $("#save");
             var name = $('#name').val();
             var description = $('#description').val();
-            var imageThumb = '9UoMqWLnKEzK1R.jpg';
-            var imageBig = '9UoMqWLnKEzK1R.jpg';
             var externalLink = $('#externalLink').val();
+            var imageThumb = $("#image_file").val();
             var obj = { name         : name,
-                description  : description,
-                imageThumb   : imageThumb,
-                imageBig     : imageBig,
-                externalLink : externalLink };
-
-            var feedback = {
-                success: function () {
-                    console.log('ProductNewView:Product:Create:Succeed');
-                },
-                error: function (model, error) {
-                    console.log('ProductNewView:Product:Create:Failed');
-                    console.log(error);
-                },
-                wait: true
-            };
-
+                        description  : description,
+                        externalLink : externalLink,
+                        imageThumb   : imageThumb };
             var product = new Product();
-            var valid = product.save(obj, feedback);
+            var valid = product.set(obj, { validate: true });
             if(!valid) {
                 console.log('ProductNewView:Product:Create:IsValid');
             } else {
-                valid.complete(function(response, status) {
-                    if (status) {
-                        console.log('ProductNewView:Product:Create:Valid');
-                        products.add(product);
+                vent.on( "FileUpload", function(param){
+                    var status = param.status;
+                    switch(status){
+                        case 'beforeSend' : save.attr("disabled", "disabled"); break;
+                        case 'uploadProgress' : console.log(param.percentComplete); break;
+                        case 'success' :
+                            obj.imageThumb = param.filename.imageThumb;
+                            obj.imageBig = param.filename.imageBig;
+                            product.save(obj, {
+                                success: function () {
+                                    console.log('ProductNewView:Product:Create:Succeed');
+                                    products.add(product);
+                                },
+                                error: function (model, error) {
+                                    console.log('ProductNewView:Product:Create:Failed');
+                                    console.log(error);
+                                },
+                                wait: true
+                            });
+                            break;
+                        case 'error' : break;
+                        case 'complete' :
+                            save.removeAttr("disabled");
+                            vent.off( "FileUpload");
+                            break;
                     }
                 });
+                fileUpload(frm, vent);
+                frm.submit();
             }
         }
     });
@@ -202,18 +274,18 @@ $(document).ready(function(){
         model: Product,
         url: '../../api/v1/product/',
         initialize: function() {
-
+            _.bindAll(this, 'parse', 'removeOne');
         },
         parse: function(data) {
             return data.products;
         },
-        removeOne : function(product){
+        removeOne : function(productView){
             console.log('Products:removeOne');
-            product.model.destroy({
-                success: function() {
+            productView.model.destroy({
+                success: function(model, response) {
                     console.log('ProductView:Product:destroy:Succeed');
-                    product.remove();
-                    product.unbind();
+                    productView.remove();
+                    productView.unbind();
                 }
             });
         }
@@ -221,14 +293,15 @@ $(document).ready(function(){
 
     var ProductsView = Backbone.View.extend({
         initialize: function() {
+            _.bindAll(this, 'render', 'addOne');
             this.collection.bind("add", this.addOne, this);
+        },
+        render: function(){
+            return this;
         },
         addOne: function(product) {
             console.log('ProductsView:addOne');
             this.$el.prepend(new ProductView({ model: product }).render().el);
-        },
-        render: function(){
-            return this;
         }
     });
 
