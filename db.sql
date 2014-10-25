@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2014 at 12:45 AM
+-- Generation Time: Oct 25, 2014 at 04:08 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,14 +34,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `image_thumb` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `external_link` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `description`, `image_big`, `image_thumb`, `external_link`) VALUES
-  (1, 'Title', 'Detail', '9UoMqWLnKEzK1R.jpg', '9UoMqWLnKEzK1R.jpg', 'www.el.com');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -88,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `salt`, `password`, `email`, `is_active`) VALUES
-  (1, 'user', '08ed7dda28cddc04fce8c1b9b9dcc632', 'cdbd4af2e811959de20aba05a8c86872eaf51d8c', 'user@mail.com', 1),
-  (2, 'admin', 'eb068167d0a79465ccced72033b1af24', 'fbf083b916ace7dea961fb9446531910d827c7bc', 'admin@mail.com', 1);
+  (1, 'user', '028e9627d173856bca984b195db01006', '3e59336b805a06091a2f1178921cfd83e7b42f19', 'user@mail.com', 1),
+  (2, 'admin', 'bec58e3e2195eac576392dfc68150363', 'f70a241b9878967adcc41b1df248576c638b3246', 'admin@mail.com', 1);
 
 -- --------------------------------------------------------
 

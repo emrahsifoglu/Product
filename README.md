@@ -17,9 +17,13 @@ A simple product management system.
 - Product
 - Profile
 
-### DemoBundle ###
+#### DemoBundle ####
 
 This is main bundle of project. In other words this is the app's core.
+
+#### FileBundle ####
+
+This bundle comes with two controllers, FileController and ThumbnailController
 
 ## Routes ##
 
