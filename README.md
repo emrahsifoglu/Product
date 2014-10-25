@@ -19,7 +19,7 @@ A simple product management system.
 
 ### DemoBundle ###
 
-This is main bundle of project. In the other words this is the app's core.
+This is main bundle of project. In other words this is the app's core.
 
 ## Routes ##
 
@@ -38,3 +38,5 @@ Login form also can be hidden. AJAX calls are used both log in and also log out.
 There are two users for now, whose usernames are "user" and "admin". They can be anything. I kept this way to make easier.
 There is one page can be viewed by all authenticated user but when logging in, user will be redirected to page depending on the role for now.
 User doesn't have any action such as write or read however admin has a permission for all CRUD operations.
+
+To add new entry which represents a product, all fields have to be filled with right formats.
